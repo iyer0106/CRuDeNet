@@ -1,0 +1,19 @@
+# CUDA installation - choose PyTorch version matching your CUDA
+# Option 1: CUDA 11.8
+# pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+
+# Option 2: CUDA 12.1
+# pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
+
+# Option 3: CUDA 12.4
+# pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124
+
+# After installing PyTorch with CUDA, install other dependencies:
+numpy
+tifffile
+tqdm
+matplotlib
+scikit-image
+
+# Then install crudenet: pip install crudenet
+

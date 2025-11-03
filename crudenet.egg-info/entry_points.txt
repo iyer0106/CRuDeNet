@@ -1,0 +1,6 @@
+[console_scripts]
+crudenet-export = crudenet.export:main
+crudenet-infer = crudenet.infer:main
+crudenet-train = crudenet.train:main
+deepcad-test = crudenet.deepcad_test:main
+deepcad-train = crudenet.deepcad_train:main

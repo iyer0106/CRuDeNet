@@ -1,0 +1,9 @@
+# CPU-only installation (default)
+# pip install -r requirements-cpu.txt crudenet
+torch
+numpy
+tifffile
+tqdm
+matplotlib
+scikit-image
+

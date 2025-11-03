@@ -1,0 +1,104 @@
+Metadata-Version: 2.4
+Name: crudenet
+Version: 0.1.0
+Summary: Real-time ConvGRU denoiser for microscopy volumes (RTV2)
+Home-page: https://github.com/yourusername/CRuDeNet
+Author: Nikhil Iyer
+Author-email: your.email@umn.edu
+License: MIT
+Project-URL: Bug Tracker, https://github.com/yourusername/CRuDeNet/issues
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: torch
+Requires-Dist: numpy
+Requires-Dist: tifffile
+Requires-Dist: tqdm
+Requires-Dist: matplotlib
+Requires-Dist: scikit-image
+Requires-Dist: pyyaml
+Dynamic: license-file
+
+# CRuDeNet
+
+Real-time ConvGRU denoiser (RTV2) for microscopy volumes.
+
+## Installation
+
+### CPU-only (default)
+```bash
+pip install crudenet
+```
+This installs PyTorch CPU version automatically. The package will work on CPU.
+
+### With CUDA support
+
+1. **First, install PyTorch with CUDA** (choose version matching your CUDA):
+```bash
+# For CUDA 11.8
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+
+# For CUDA 12.1
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
+
+# For CUDA 12.4
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124
+```
+
+2. **Then install crudenet:**
+```bash
+pip install crudenet
+```
+
+The package automatically detects and uses CUDA if available.
+
+## Usage
+
+### CLI
+```bash
+# Train
+crudenet-train --raw RAW.tif --gt GT.tif --out outputs/
+
+# Infer
+crudenet-infer --raw RAW.tif --ckpt outputs/crudenet_convgru_causal.pth --out outputs/
+
+# Export ONNX
+crudenet-export --ckpt outputs/crudenet_convgru_causal.pth --out outputs/
+```
+
+### Python API
+```python
+from crudenet import (
+    ConvGRU, VolumeDataset, 
+    train, infer_stream, export_onnx,
+    train_deepcad, test_deepcad, get_deepcad_output_path
+)
+```
+
+## DeepCAD Integration
+
+CRuDeNet includes DeepCAD-RT support for generating ground truth data:
+
+### CLI
+```bash
+# Train DeepCAD
+deepcad-train --datasets-path /path/to/data --pth-dir ./pth --n-epochs 10
+
+# Test DeepCAD (generate ground truth)
+deepcad-test --datasets-path /path/to/data --denoise-model BrainSlice --output-dir ./results
+```
+
+### Full Pipeline Example
+
+See `examples/full_pipeline.ipynb` for a complete workflow:
+1. Train DeepCAD-RT
+2. Generate DeepCAD ground truth
+3. Train ConvGRU using DeepCAD output
+4. Export to ONNX
+
+## License
+MIT
+
